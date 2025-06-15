@@ -10,6 +10,9 @@ class SavingsAccount(Account):
         else:
             print("Amount exeeds withdrawal limit")
 
+    def deposit(self, amount):
+        super().withdraw(amount)
+
 savings = SavingsAccount(10000)
 savings.withdraw(200, 1000)
 print(savings.balance)
