@@ -1,8 +1,12 @@
 from account import Account
+
 class CurrentAccount(Account):
-    def __init__(self, balance):
-        Account.__init__(self, balance)
-    
-currentAccount = CurrentAccount(200000)
-currentAccount.deposit(1000)
-print(currentAccount.balance)
+    def _init_(self, balance):
+        Account._init_(self, balance)
+
+    def withdraw(self, amount):
+            super().withdraw(amount)
+
+current = CurrentAccount(100000)
+current.withdraw(0)
+print(current.balance)

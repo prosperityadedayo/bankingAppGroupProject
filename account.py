@@ -10,3 +10,8 @@ class Account:
     def deposit(self, amount):
         self.balance += amount
         print(self.balance)
+
+
+class currentaccount:
+    def __init__(self, balance):
+        self.balance = balance
