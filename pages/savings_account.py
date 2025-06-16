@@ -5,6 +5,7 @@ st.set_page_config(page_title = "SavingsAcct", layout = "centered")
 savings = SavingsAccount(200000)
 
 with st.form("savings_form"):
+    st.subheader("WE GOT YOU COVERED")
     st.title("Savings Account")
     amount = st.number_input("Enter Amount")
     operations = st.selectbox("Deposit or withdraw", ("Deposit", "Withdraw"))

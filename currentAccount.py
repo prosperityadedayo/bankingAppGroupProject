@@ -7,6 +7,9 @@ class CurrentAccount(Account):
     def withdraw(self, amount):
             super().withdraw(amount)
 
+    def deposit(self, amount):
+            super().deposit(amount)
+
 current = CurrentAccount(100000)
 current.withdraw(0)
 print(current.balance)
