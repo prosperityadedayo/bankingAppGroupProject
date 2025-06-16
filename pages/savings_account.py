@@ -1,5 +1,6 @@
 import streamlit as st
 from savingsAccount import SavingsAccount
+from datetime import datetime
 
 st.set_page_config(page_title = "SavingsAcct", layout = "centered")
 if "savings" not in st.session_state:
@@ -20,12 +21,23 @@ with st.form("savings_form"):
         elif amount > limit:
             st.warning("⚠️ You can only withdraw ₦1000 or less at a time")
         else:
-            amount <= st.session_state.savings.balance
             st.session_state.savings.balance -= amount
-            st.success(f"✅ Successfully Withdrew ₦{amount}")
+            st.session_state.transactions.append({
+                "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "Account": "Savings",
+                "Type": "Withdraw",
+                "Amount": -amount
+            })
+            st.success(f"✅ Successfully Withdrew ₦{amount:,}")
 
     elif submit and operations == "Deposit":
-        st.success(f"✅ Successfully Deposited ₦{amount}")
-        with st.spinner("Processing..."):
-            st.session_state.savings.deposit(amount)
+        st.session_state.savings.deposit(amount)
+        st.session_state.transactions.append({
+            "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Account": "Savings",
+            "Type": "Deposit",
+            "Amount": amount
+        })
+        st.success(f"✅ Successfully Deposited ₦{amount:,}")
+            
     st.write(f"###  Updated Balance: ₦{st.session_state.savings.balance}")

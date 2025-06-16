@@ -1,5 +1,5 @@
 import streamlit as st
-
+from datetime import datetime
 from currentAccount import CurrentAccount
 
 st.set_page_config(page_title = "current account", layout = "centered")
@@ -17,16 +17,26 @@ with st.form("CURRENT_FORM"):
         if amount > st.session_state.current.balance:
             st.error("❌ Insufficient funds")
         elif amount > limit:
-            st.warning("⚠️ You can only withdraw N1000 or less at a time")
+            st.warning("⚠️ You can only withdraw ₦1000 or less at a time")
         else:
-            amount <= st.session_state.current.balance
             st.session_state.current.balance -= amount
-            st.success(f"✅ Successfully withdrew ₦{amount}")
+            st.session_state.transactions.append({
+                "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "Account": "Current",
+                "Type": "Withdraw",
+                "Amount": -amount
+            })
+            st.success(f"✅ Successfully withdrew ₦{amount:,}")
 
     elif submit and operations == "Deposit":
-        st.success(f"✅ Successfully Deposited ₦{amount}")
-        with st.spinner("Processing..."):
-            st.session_state.current.deposit(amount)
+        st.session_state.current.deposit(amount)
+        st.session_state.transactions.append({
+            "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Account": "Current",
+            "Type": "Deposit",
+            "Amount": amount
+        })
+        st.success(f"✅ Successfully Deposited ₦{amount:,}")
     st.write(f"### Updated Balance: ₦{st.session_state.current.balance}")
 
 
