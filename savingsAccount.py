@@ -4,15 +4,13 @@ class SavingsAccount(Account):
     def __init__(self, balance):
         Account.__init__(self, balance)
 
-    def withdraw(self, amount, limit):
-        if(amount < limit):
+    def withdraw(self, amount, limit = 1000):
+        if amount < limit:
             super().withdraw(amount)
         else:
             print("Amount exeeds withdrawal limit")
 
     def deposit(self, amount):
-        super().withdraw(amount)
+        super().deposit(amount)
 
 savings = SavingsAccount(10000)
-savings.withdraw(200, 1000)
-print(savings.balance)
